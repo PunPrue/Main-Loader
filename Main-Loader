@@ -1,7 +1,65 @@
-local Games = loadstring(game:HttpGet("https://raw.githubusercontent.com/PunPrue/Main-Loader/refs/heads/main/ListGames"))()
+--[[
+    ██████╗ ██╗   ██╗███╗   ██╗██████╗ ██████╗ ██╗   ██╗███████╗
+    ██╔══██╗██║   ██║████╗  ██║██╔══██╗██╔══██╗██║   ██║██╔════╝
+    ██████╔╝██║   ██║██╔██╗ ██║██████╔╝██████╔╝██║   ██║█████╗  
+    ██╔═══╝ ██║   ██║██║╚██╗██║██╔═══╝ ██╔══██╗██║   ██║██╔══╝  
+    ██║     ╚██████╔╝██║ ╚████║██║     ██║  ██║╚██████╔╝███████╗
+    ╚═╝      ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+                        LOADER  |  by PunPrue
+]]
 
-local URL = Games[game.PlaceId]
+if getgenv().PunPrueLoaderLoaded then
+    return warn("[PunPrue] Loader already running.")
+end
+getgenv().PunPrueLoaderLoaded = true
+
+local function notify(title, text, duration)
+    duration = duration or 3
+    pcall(function()
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = title,
+            Text = text,
+            Duration = duration,
+            Icon = "rbxassetid://7733658504" -- optional cool icon
+        })
+    end)
+end
+
+print("══════════════════════════════════════")
+print("   PunPrue Main Loader  |  Loading...")
+print("══════════════════════════════════════")
+
+notify("PunPrue Loader", "Checking supported games...", 2)
+
+local success, Games = pcall(function()
+    return loadstring(game:HttpGet("https://raw.githubusercontent.com/PunPrue/Main-Loader/refs/heads/main/ListGames"))()
+end)
+
+if not success or type(Games) ~= "table" then
+    warn("[PunPrue] Failed to load game list.")
+    notify("PunPrue Loader", "Failed to fetch game list!", 5)
+    return
+end
+
+local PlaceId = game.PlaceId
+local URL = Games[PlaceId]
 
 if URL then
-  loadstring(game:HttpGet(URL))()
+    print("[PunPrue] Supported game detected → PlaceId: " .. PlaceId)
+    notify("PunPrue Loader", "Game found! Loading script...", 3)
+
+    local ok, err = pcall(function()
+        loadstring(game:HttpGet(URL))()
+    end)
+
+    if ok then
+        print("[PunPrue] Script loaded successfully!")
+        notify("PunPrue Loader", "Script loaded successfully!", 4)
+    else
+        warn("[PunPrue] Error loading script:", err)
+        notify("PunPrue Loader", "Failed to load script!", 5)
+    end
+else
+    print("[PunPrue] This game is not supported yet. PlaceId: " .. PlaceId)
+    notify("PunPrue Loader", "Game not supported.", 4)
 end
