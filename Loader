@@ -1,0 +1,3 @@
+pcall(function()
+    assert(loadstring(game:HttpGet("https://raw.githubusercontent.com/PunPrue/Main-Loader/main/Main-Loader"))())
+end)
