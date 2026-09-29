@@ -1,0 +1,5 @@
+local Games = {
+  [96988868492490] = "e5eb18a9daf74be89079a2d1fa511524", -- Grow Anything
+}
+
+return Games
