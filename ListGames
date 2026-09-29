@@ -1,5 +1,5 @@
 local Games = {
-  [96988868492490] = "https://raw.githubusercontent.com/PunPrue/Script/refs/heads/main/Grow%20Anything.lua", -- Grow Anything
+  [96988868492490] = "https://raw.githubusercontent.com/PunPrue/Script/main/Grow%20anything-Loader.lua", -- Grow Anything 2v
 }
 
 return Games
